@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx spack"
+    "build": "esbuild src/index.js --bundle --outfile=public/index.js --watch"
   },
   "author": "Alexander Flink",
   "license": "ISC",
@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@swc/cli": "^0.1.57",
-    "@swc/core": "^1.3.22"
+    "@swc/core": "^1.3.22",
+    "esbuild": "^0.16.10"
   }
 }

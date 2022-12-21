@@ -4,19 +4,95 @@
     <meta charset="utf-8" />
     <title>statusbar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="./reset.css" />
-    <link rel="stylesheet" href="./styles.css" />
-    <script type="module" src="/lib/main.js"></script>
+    <script src="./index.js" defer></script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      /* * { */
+      /*   margin: 0; */
+      /* } */
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+      img,
+      picture,
+      video,
+      canvas,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+      input,
+      button,
+      textarea,
+      select {
+        font: inherit;
+      }
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        overflow-wrap: break-word;
+      }
+    </style>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      body {
+        background: black;
+        color: white;
+        margin: 0;
+        font-family: "Hack Nerd Font Mono";
+        font-size: 12px;
+      }
+    </style>
   </head>
   <body>
     <template id="app-root-template">
+      <style>
+        main {
+          display: flex;
+          align-items: center;
+          padding-inline: 10px;
+          gap: 10px;
+          height: 100%;
+        }
+
+        slot[name="icon"]::slotted(*) {
+          font-size: 24px;
+        }
+
+        slot[name="time"]::slotted(*) {
+          margin-left: auto;
+        }
+      </style>
       <main>
-        <span class="icon"></span>
-        <span>alexanderflink</span>
-        <span>18:39</span>
+        <slot name="icon">slot</slot>
+        <slot name="user">slot</slot>
+        <slot name="time">slot</slot>
       </main>
     </template>
 
-    <app-root />
+    <app-root>
+      <span slot="icon"></span>
+      <span slot="user">user</span>
+      <span slot="time">00:00</span>
+    </app-root>
   </body>
 </html>
