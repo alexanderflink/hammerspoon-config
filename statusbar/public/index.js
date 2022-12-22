@@ -4,7 +4,8 @@
     elements = {};
     state = {
       user: "",
-      time: "00:00"
+      time: "00:00",
+      mode: "default"
     };
     constructor() {
       super();
@@ -14,9 +15,9 @@
       shadowRoot.appendChild(template.content.cloneNode(true));
       this.elements.time = this.querySelector("[slot=time]");
       this.elements.user = this.querySelector("[slot=user]");
+      this.elements.mode = this.querySelector("[slot=mode]");
     }
     updateState(state) {
-      console.log("updateState", state);
       Object.entries(state).forEach(([key, value]) => {
         this.state[key] = value;
       });
@@ -25,6 +26,8 @@
     render() {
       this.elements.time.textContent = this.state.time;
       this.elements.user.textContent = this.state.user;
+      this.elements.mode.textContent = this.state.mode;
+      this.setAttribute("data-mode", this.state.mode);
     }
   };
   customElements.define("app-root", AppRoot);

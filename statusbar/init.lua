@@ -35,8 +35,19 @@ end)
 local function onWebviewReady()
 	local user = getUser()
 	local time = getTime()
-	print(user)
 	updateWebViewState({ user = user, time = time })
 end
 
 webviewController:setCallback(onWebviewReady)
+
+-- listen for messages on unix socket
+local server = hs.socket
+	.new(function(data)
+		local mode = string.gsub(data, "\n", "")
+		updateWebViewState({ mode = mode })
+	end)
+	:listen("/tmp/statusbar")
+
+hs.timer.doEvery(0.1, function()
+	server:read("\n")
+end)

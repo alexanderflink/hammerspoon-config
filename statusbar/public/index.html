@@ -52,14 +52,31 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
+        --background-color: #242038;
+        --text-color: #e4e3f7;
+        --blue: #38a1bd;
+        --green: #9cc086;
+        --pink: #caa4ec;
       }
 
       body {
-        background: black;
-        color: white;
+        background: var(--background-color);
+        color: var(--text-color);
         margin: 0;
         font-family: "Hack Nerd Font Mono";
         font-size: 12px;
+      }
+
+      app-root[data-mode="default"] {
+        --mode-color: var(--blue);
+      }
+
+      app-root[data-mode="window"] {
+        --mode-color: var(--green);
+      }
+
+      app-root[data-mode="space"] {
+        --mode-color: var(--pink);
       }
     </style>
   </head>
@@ -70,7 +87,7 @@
           display: flex;
           align-items: center;
           padding-inline: 10px;
-          gap: 10px;
+          gap: 20px;
           height: 100%;
         }
 
@@ -81,10 +98,55 @@
         slot[name="time"]::slotted(*) {
           margin-left: auto;
         }
+
+        .mode-presenter {
+          height: 100%;
+          width: 50px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding-inline: 30px 5px;
+          background-color: var(--mode-color);
+          color: var(--background-color);
+          font-weight: bold;
+          text-transform: uppercase;
+          transition: background-color 0.1s;
+        }
+
+        .mode-presenter > * {
+          z-index: 1;
+        }
+
+        .mode-presenter::before {
+          content: "";
+          position: absolute;
+          left: -12px;
+          background-color: var(--background-color);
+          height: 100%;
+          aspect-ratio: 1 / 1;
+          rotate: 45deg;
+          transition: background-color 0.1s;
+        }
+
+        .mode-presenter::after {
+          content: "";
+          position: absolute;
+          right: -12px;
+          z-index: -1;
+          background-color: var(--mode-color);
+          height: 100%;
+          aspect-ratio: 1 / 1;
+          rotate: 45deg;
+          transition: background-color 0.1s;
+        }
       </style>
       <main>
         <slot name="icon">slot</slot>
         <slot name="user">slot</slot>
+        <div class="mode-presenter">
+          <slot name="mode">slot</slot>
+        </div>
         <slot name="time">slot</slot>
       </main>
     </template>
@@ -92,6 +154,7 @@
     <app-root>
       <span slot="icon"></span>
       <span slot="user">user</span>
+      <span slot="mode">mode</span>
       <span slot="time">00:00</span>
     </app-root>
   </body>
