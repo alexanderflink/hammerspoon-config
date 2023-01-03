@@ -7,7 +7,14 @@ webserver:start()
 
 local webviewController = hs.webview.usercontent.new("statusbar")
 
-local webview = hs.webview.new({ x = 0, y = 0, w = 1680, h = 24 }, { developerExtrasEnabled = true }, webviewController)
+local primaryScreen = hs.screen.primaryScreen()
+local frame = primaryScreen:frame()
+
+local webview = hs.webview.new(
+	{ x = 0, y = 0, w = frame.w, h = 24 },
+	{ developerExtrasEnabled = true },
+	webviewController
+)
 webview:behaviorAsLabels({ "canJoinAllSpaces" })
 webview:url("http://localhost:" .. webserver:port())
 webview:bringToFront(false)
